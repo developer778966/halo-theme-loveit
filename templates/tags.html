@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(title = '标签 - ' + ${site.title}, hero = null, content = ~{::content}, head = null, footer = null, sidebar = null, contentClass = null)}"
+>
+  <th:block th:fragment="content">
+    <div class="page archive">
+      <h2 class="single-title animated fadeInDown faster" >标签</h2>
+      <div class="tag-cloud-tags">
+        <div id="page">
+          <style type="text/css">
+            .site-content {
+              max-width: none;
+            }
+            #tag-wordcloud {
+              width: 100%;
+              height: 300px;
+            }
+  
+            .tag-contents {
+              max-width: 800px;
+            }
+          </style>
+          <div class="tag-contents">
+            <!--tags-->
+            <div class="card-container tags-content">
+              <div id="tags" class="chip-container">
+                <div class="card">
+                  <div class="card-content">
+                    <div
+                      th:unless="${not #strings.isEmpty(theme.config.patternimg.tag_patternimg)} or (${theme.config.random_image.rimage_cover_sheet_open} and ${not #strings.isEmpty(theme.config.random_image.rimage_url)})"
+                      class="tag-title"
+                    >
+                      <span class="iconify iconify--xxlarge" data-icon="fa:tags"></span>
+                      <span data-i18n="page.tags.title"></span>
+                    </div>
+                    <div class="tag-chips">
+                      <a
+                        data-pjax
+                        th:each="tag : ${tags}"
+                        th:href="@{${tag.status.permalink}}"
+                        th:title="|${tag.spec.displayName}: ${tag.postCount}|"
+                        aria-label="get the next tag"
+                      >
+                        <span class="chip chip-default" th:style="|background-color: ${tag.spec.color}|" th:attr="data-tagname=${tag.spec.displayName}">
+                          <th:block th:text="${tag.spec.displayName}"></th:block>
+                          <span class="tag-length" th:text="${tag.postCount}"> </span>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>

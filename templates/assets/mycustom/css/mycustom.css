@@ -1,0 +1,344 @@
+/** 魔改主题新增如下:
+* 1 标签页样式
+* 2 页脚样式
+* 3 链接样式
+* 4 菜单样式
+* 5 首页展示文章卡片单列、双列、三列
+* 6 页面正文相关调整
+*********************/
+
+/* 1 标签页样式*/
+.tag-contents {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: center;
+    border: 0;
+    border-radius: 10px;
+    color: rgba(0,0,0,.87);
+    background: #fff 50%;
+    background-size: cover;
+    box-shadow: 0 15px 35px rgba(50,50,93,.1),0 5px 15px rgba(0,0,0,.07);
+    margin: 0 auto
+}
+
+.card .card-content {
+    padding: 24px;
+    border-radius: 0 0 2px 2px
+}
+
+.chip-container .tag-title {
+    margin-bottom: 10px;
+    color: #3c4858;
+    font-size: 1.75rem;
+    font-weight: 400
+}
+
+.chip-container .tag-chips {
+    margin: 1rem auto .5rem;
+    max-width: 850px;
+    text-align: center
+}
+
+.chip-container .tags-posts {
+    margin-top: 20px
+}
+
+.chip-container .chip-default {
+    color: #34495e
+}
+
+.chip-container .chip-active {
+    color: #fff!important;
+    background: linear-gradient(to bottom right,#ff5e3a 0,#ff2a68 100%)!important;
+    box-shadow: 2px 5px 10px #aaa!important
+}
+
+.chip-container .chip {
+    margin: 10px 10px;
+    padding: 19px 14px;
+    display: inline-flex;
+    line-height: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 3px 5px rgba(0,0,0,.12);
+    z-index: 0
+}
+
+.chip-container .chip:hover {
+    color: #fff;
+    background: linear-gradient(to right,#4cbf30 0,#0f9d58 100%)!important
+}
+
+.chip .tag-length {
+    margin-left: 5px;
+    margin-right: -2px;
+    font-size: .9rem
+}
+
+.chip-default .tag-length {
+    color: #9b8b2a;
+    margin-top: 0
+}
+
+.chip-active .tag-length {
+    color: #fff
+}
+/* 2 页脚样式*/
+.github-badge {
+	display: inline-block;
+	border-radius: 4px;
+	text-shadow: none;
+	font-size: 12px;
+	color: #fff;
+	line-height: 15px;
+	background-color: #525a5f;
+	margin-bottom: 5px;
+}
+.github-badge .badge-subject {
+	display: inline-block;
+	background-color: #4d4d4d;
+	padding: 4px 4px 4px 6px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+.github-badge .badge-value {
+	display: inline-block;
+	background-color: #4d4d4d;
+	padding: 4px 6px 4px 4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+.github-badge .bg-blue {
+	background-color:#126CD3!important;
+}
+.github-badge .bg-red {
+	background-color: #e05d44!important;
+}
+.github-badge .bg-brightgreen {
+	background-color: #4dc820!important;
+}
+.github-badge .bg-brightyellow {
+	background-color: #e0e420!important;
+}
+.github-badge .bg-cyan {
+	background-color: #17d6d6!important;
+}
+.github-badge .bg-orange {
+	background-color: orange!important;
+}
+.github-badge .bg-blueviolet {
+	background-color: #6a2da3!important;
+}
+/* 3 链接样式*/
+.links {
+	margin-bottom: 80px
+}
+
+.links ul {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+	width: 100%;
+	display: inline-block
+}
+
+.links ul li {
+	width: 32%;
+	float: left;
+	border: 1px solid #ececec;
+	padding: 10px 30px;
+	margin: 4px;
+	position: relative;
+	overflow: hidden;
+	transition: all .3s;
+	border-radius: 10px;
+	/** fix #35 友链多了以后显示BUG */
+	height: 100px;
+}
+
+.links ul li img {
+	float: right;
+	box-shadow: inset 0 0 10px #000;
+	padding: 5px;
+	opacity: 1;
+	transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	transition: all ease 1s;
+	-webkit-transition: all ease 1s;
+	-moz-transition: all ease 1s;
+	-o-transition: all ease 1s;
+	margin-top: 5px;
+	width: 65px;
+	height: 65px;
+	padding: 2px;
+	border-radius: 100%
+}
+
+.links ul li:hover img {
+	transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+	-ms-transform: rotate(360deg)
+}
+
+span.sitename {
+	color: orange;
+	padding-bottom: 10px;
+	display: block;
+	transition: all .3s;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	white-space: nowrap
+}
+
+.linkdes {
+	color: #949494;
+	font-size: 13px;
+	padding: 10px 0;
+	border-top: 1px dashed #ddd;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	line-height: 25px;
+	transition: all .5s
+}
+
+.link-title {
+	font-weight: 400;
+	color: #6d6d6d;
+	padding-left: 0;
+	border-left: none;
+	margin: 50px 0 20px
+}
+
+.link-title span.fake-title {
+	padding-left: 10px;
+	border-left: 3px solid orange
+}
+
+.links ul li:before {
+	content: "";
+	background-color: orange;
+	transform: skew(45deg, 0);
+	width: 0;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: -60px;
+	z-index: -1;
+	transition: all .5s;
+	opacity: 0.2;
+}
+
+.links ul li:hover {
+	color: #27323a;
+	border: 1px solid orange
+}
+
+.links ul li:hover:before {
+	width: 180%
+}
+
+.links ul li:hover .linkdes {
+	border-top: 1px dashed #fff
+}
+
+.links .link-items .link-item:hover {
+    cursor: pointer;
+	transform: translateX(10px);
+	-webkit-transform:translateX(10px);
+	transition: all .3s ease-out;
+	color: orange;
+}
+/* 4 header修改样式 */
+/* 子菜单太宽空白太大，现调整为自动宽度 */
+.w-40 {
+    width: auto;
+}
+/* 原字体font-size: .875rem;太小 */
+.text-sm {
+    font-size: 1rem;
+    line-height: 1.25rem;
+}
+/* 5 首页展示文章卡片单列、双列、三列 */
+/* 新增宽度覆盖样式 ，方便首页展示文章卡片单列，双列，三列切换*/
+.home[data-home=posts] .summary-width-32 {
+    width: 32%;
+}
+
+.home[data-home=posts] .summary-width-49 {
+    width: 49%;
+}
+
+.home[data-home=posts] .summary-width-100 {
+    width: 100%;
+}
+
+.summary {
+	
+	align-items: stretch;
+	max-width: 100%;
+	padding-bottom: 0rem;
+}
+/* 当主题设置首页单列显示文章卡片时，用到以下样式 */
+.post-left {
+	flex-shrink: 0;
+	width: 35%;
+	padding-top: 2rem; /* 添加内边距，使得图片与div边缘有距离 */
+	padding-left: 2rem;
+	padding-right: 2rem;
+	padding-bottom: 1rem;/* home.min.css里设置了1rem，这里+1 */
+    box-sizing: border-box; /* 确保padding不会增加元素的总宽度 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+}
+
+.home[data-home=posts] .summary img {
+	width: 100%; /* 图片宽度填满 */
+    height: 100%; /* 图片高度填满 */
+    object-fit: cover; /* 图片填充整个容器，可能会裁剪图片的某些部分 */
+}
+
+.post-right {
+flex-grow: 1;
+}
+
+.single-title {
+margin-top: 0;
+}
+
+.post-meta,
+.post-content,
+.post-footer {
+margin-bottom: 1rem;
+}
+
+/* 分类页面一行三列展示 */
+.archive .categories-card .card-item-width-32 {
+	width: 32%;
+}
+/* 6 页面正文相关调整 */
+/* 文章正文太宽，设置调整到40% */
+@media only screen and (min-width: 1200px) and (max-width: 7680px) {
+    .single {
+        width: 40%;
+    }
+}
+/* 覆盖正文字体颜色 */
+:root {
+    --content-body: #374151;
+}
+.content {
+    color: var(--content-body);
+}

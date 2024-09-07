@@ -1,0 +1,24 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-loveit
+spec:
+  displayName: LoveIt
+  author:
+    name: halo-dev
+    website: https://halo.run
+  description: 基于Halo 2.0的默认主题Earth的基础上魔改的LoveIt主题风格
+  logo: https://halo.run/logo
+  website: https://github.com/halo-dev/theme-earth
+  repo: 
+  settingName: "theme-loveit-setting"
+  configMapName: "theme-loveit-configMap"
+  version: 1.0.0
+  require: ">=2.8.0"
+  customTemplates:
+    page:
+      - name: 数字炸弹
+        description: 数字炸弹小游戏页面
+        screenshot: 
+        file: digital-bomb.html
+

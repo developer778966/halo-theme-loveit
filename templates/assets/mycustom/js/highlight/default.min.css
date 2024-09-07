@@ -1,0 +1,61 @@
+/*!魔改Halo的highlight.js插件 Theme: Default Description: Original highlight.js style Author: (c) Ivan Sagalaev <maniac@softwaremaniacs.org> Maintainer: @highlightjs/core-team Website: https://highlightjs.org/ License: see project LICENSE Touched: 2021 */
+pre code.hljs{
+  display:block;
+  overflow-x:auto;
+  padding:1em
+}
+code.hljs{
+  padding:3px 5px
+}
+.hljs{
+  background:#f3f3f3;
+  color:#444
+}
+.hljs-comment{
+  color:#a0a1a8;
+}
+.hljs-punctuation,.hljs-tag{
+  color:#444a
+}
+.hljs-tag .hljs-attr,.hljs-tag .hljs-name{
+  color:#2b77fa
+}
+.hljs-attribute,.hljs-doctag,.hljs-name,.hljs-selector-tag{
+  font-weight:700
+}
+.hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{
+  color:#b501a9
+}
+.hljs-section,.hljs-title{
+  color:#2b77fa;
+  /*魔改取消了加粗font-weight:700*/
+}
+.hljs-link,.hljs-operator,.hljs-regexp,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-symbol,.hljs-template-variable,.hljs-variable{
+  color:#333
+}
+.hljs-literal{
+  color:#695
+}
+.hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{
+  color:#cb8100
+}
+.hljs-meta{
+  color:#0086c1
+}
+.hljs-meta .hljs-string{
+  color:#38a
+}
+.hljs-emphasis{
+  font-style:italic
+}
+.hljs-strong{
+  font-weight:700
+}
+/* 魔改.rounded-xl选择器基本div样式 添加过渡效果，使阴影的变化更平滑*/
+.rounded-xl {
+  transition: box-shadow 0.3s ease; 
+}
+/* 鼠标悬停.rounded-xl选择器时的div样式 */
+.rounded-xl:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 阴影设置，可调整阴影的偏移量、模糊半径和颜色 */
+}

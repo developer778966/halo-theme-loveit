@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(title = '分类 - ' + ${site.title}, hero = null, content = ~{::content}, head = null, footer = null, sidebar = null, contentClass = null)}"
+>
+  <th:block th:fragment="content">
+    <div class="page archive">
+      <h2 class="single-title animated fadeInDown faster" >分类</h2>
+      <div class="categories-card" th:with="list_layout=${theme.config.layout.categories_list_layout}">
+          <div class="card-item" th:each="category : ${categories}" th:classappend="|${list_layout == 'grid_3' ? 'card-item-width-32 ' : ''}|">
+            <div class="card-item-wrapper">
+              <h3 class="card-item-title">
+                  <a th:href="@{${category.status.permalink}}" 
+                  th:title="${category.spec.displayName}+': '+${category.postCount}" 
+                  >
+                    [[${category.spec.displayName}]]
+                    <sup th:text="${category.postCount}">24</sup>
+                  </a>
+              </h3>
+              <th:block th:if="${category}" th:with="posts = ${postFinder.listByCategory(1,5,category.metadata.name)}">
+                <th:block th:if="${posts.total gt 0}"
+                  th:with="postItems=${posts.items},list_layout=${theme.config.layout.post_list_layout}">
+
+                  <div class="categories-item" th:each="post : ${postItems}">
+                    <a  th:href="@{${post.status.permalink}}" class="categories-item-link">
+                      <i class="fas fa-angle-right fa-fw"></i>
+                      <Span th:text="${post.spec.title}"></Span>
+                    </a>
+                  </div>
+                </th:block>
+                <!--
+                <th:block th:if="${posts.total == 0}"
+                  th:with="postItems=${posts.items},list_layout=${theme.config.layout.post_list_layout}">
+                  <div class="categories-item">
+                    <span class="text-sm font-light text-gray-600 dark:text-slate-200">此分类下没有文章</span>
+                  </div>
+                </th:block>
+                -->
+                <th:block th:if="${posts.total gt 5}">
+                  <span class="more-post">
+                    <a th:href="@{${category.status.permalink}}" class="more-single-link">
+                        更多<i class="fas fa-angle-double-right fa-fw"></i>
+                    </a>
+                  </span>
+                </th:block>
+            </div>
+          </div>
+      </div>
+    </div>
+    <!--
+    <div class="rounded-xl bg-white p-4 shadow transition-all duration-500 hover:shadow-md dark:bg-slate-800">
+      <th:block th:replace="~{modules/category-filter}" />
+    </div>
+
+    <th:block th:with="category = ${categoryFinder.list(1,1).items[0]}">
+      <th:block th:if="${category}" th:with="posts = ${postFinder.listByCategory(1,10,category.metadata.name)}">
+        <div
+          id="post-list"
+          th:if="${posts.total gt 0}"
+          th:with="postItems=${posts.items},list_layout=${theme.config.layout.post_list_layout}"
+          class="mt-6 grid grid-cols-1 gap-6"
+          th:classappend="|${list_layout == 'grid_3' ? 'md:grid-cols-2 xl:grid-cols-3' : ''} ${list_layout == 'grid_2' ? 'md:grid-cols-2' : ''}|"
+        >
+          <th:block th:each="post : ${postItems}">
+            <th:block
+              th:replace="~{modules/post-card :: post-card(${post},true,true,true,${list_layout == 'single' ? 'column' : 'row'})}"
+            />
+          </th:block>
+        </div>
+
+        <div th:if="${posts.total == 0}" class="mt-6 flex items-center justify-center">
+          <span class="text-sm font-light text-gray-600 dark:text-slate-200">此分类下没有文章</span>
+        </div>
+
+        <div th:if="${posts.total gt 10}" class="mt-10 flex justify-end">
+          <a
+            class="group inline-flex items-center gap-2 truncate text-sm text-gray-600 hover:text-gray-900 dark:text-slate-100 dark:hover:text-slate-200"
+            th:href="@{${category.status.permalink}}"
+          >
+            <span>更多文章</span>
+            <span class="i-tabler-chevron-right -translate-x-1 text-lg transition-all group-hover:translate-x-0"></span>
+          </a>
+        </div>
+      </th:block>
+    </th:block>
+    -->
+  </th:block>
+</html>

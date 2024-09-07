@@ -1,0 +1,114 @@
+<th:block th:fragment="module_head">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2" />-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" th:href="@{/assets/dist/style.css?v={version}(version=${theme.spec.version})}" />
+    
+    <link rel="stylesheet" th:href="@{/assets/mycustom/js/highlight/default.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/mycustom/css/page.min.css?v={version}(version=${theme.spec.version})}" />
+    <link rel="stylesheet" th:href="@{/assets/mycustom/css/home.min.css?v={version}(version=${theme.spec.version})}" />
+    
+    <!--/* 魔改：高亮代码样式 根据主题设置中code_pretty值动态获取高亮css样式文件*/-->
+    <link
+    rel="stylesheet"
+    th:href="@{/assets/mycustom/css/{code_pretty}.min.css?v={version}(code_pretty=${theme.config.post.code_pretty},version=${theme.spec.version})}"
+    type="text/css"
+    media="noexist"
+    onload="this.media='all'"
+    />
+    <link rel="stylesheet" th:href="@{/assets/mycustom/css/mycustom.css?v={version}(version=${theme.spec.version})}" />
+    <link rel="stylesheet" th:href="@{/assets/mycustom/css/reward/reward.css}" />
+    <link rel="stylesheet" th:href="@{/assets/mycustom/lib/fontawesome-free/all.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/mycustom/lib/animate/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/mycustom/lib/lightgallery/lightgallery.min.css}">
+    
+    
+
+    <script th:src="@{/assets/mycustom/lib/autocomplete/autocomplete.min.js}"></script>
+    <script th:src="@{/assets/mycustom/lib/algoliasearch/algoliasearch-lite.umd.min.js}"></script>
+    <script th:src="@{/assets/mycustom/lib/lazysizes/lazysizes.min.js}"></script>
+    <script th:src="@{/assets/mycustom/lib/lightgallery/lightgallery.min.js}"></script>
+    <script th:src="@{/assets/mycustom/lib/lightgallery/lg-thumbnail.min.js}"></script>
+    <script th:src="@{/assets/mycustom/lib/lightgallery/lg-zoom.min.js}"></script>
+    <script th:src="@{/assets/mycustom/lib/clipboard/clipboard.min.js}"></script>
+    <script th:src="@{/assets/mycustom/js/highlight/highlight.pack.js}"></script>
+    <script th:src="@{/assets/mycustom/js/highlight/highlightjs-line-numbers.min.js}"></script>
+
+    <!--/* 魔改：高亮代码样式 根据主题设置中code_pretty值动态判断是用highlight.js还是prism.js */-->
+    <script th:if="${theme.config.post.code_pretty.startsWith('highlight')}" th:src="@{/assets/mycustom/js/highlight/highlight.min.js}"></script>
+    <script th:if="${theme.config.post.code_pretty.startsWith('prism')}" th:src="@{/assets/mycustom/js/highlight/prism.js}"></script>
+
+    
+    
+
+    
+    <script th:src="@{/assets/mycustom/js/theme.min.js}"></script>
+    <script type="text/javascript" src="https://lib.baomitu.com/typeit/8.4.0/index.umd.min.js"></script>
+    <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
+    <!--全局对象 window 上的变量-->
+    <script>
+        window.config = {
+            "code": {
+                "copyTitle": "复制到剪贴板",
+                "maxShownLines": 10
+            },
+            "comment": {},
+            "lightGallery": {
+                "actualSize": false,
+                "exThumbImage": "data-thumbnail",
+                "hideBarsDelay": 2000,
+                "selector": ".lightgallery",
+                "speed": 400,
+                "thumbContHeight": 80,
+                "thumbWidth": 80,
+                "thumbnail": true
+            },
+            "search": {
+                "algoliaAppID": "DLOQVASMYE",
+                "algoliaIndex": "mrhelloworld",
+                "algoliaSearchKey": "dda8c7b926cc770ae332a558f9f98e00",
+                "highlightTag": "em",
+                "maxResultLength": 10,
+                "noResultsFound": "没有找到结果",
+                "snippetLength": 50,
+                "type": "algolia"
+            }
+        };
+    </script>
+    <!--highlight初始化-->
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const extraLanguages = "".split(",").filter((x) => x);
+            for (let i = 0; i < extraLanguages.length; i++) {
+            const lang = extraLanguages[i];
+            if (lang) {
+                await loadScript(`/plugins/PluginHighlightJS/assets/static/languages/${lang}.min.js`);
+            }
+            }
+    
+            document.querySelectorAll("pre code").forEach((el) => {
+            hljs.highlightElement(el);
+            });
+        });
+    
+        function loadScript(url) {
+            return new Promise(function (resolve, reject) {
+            const script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = url;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+            });
+        }
+    </script>
+    <script th:src="@{/assets/dist/main.iife.js?v={version}(version=${theme.spec.version})}" ></script>
+    <th:block th:if="${head != null}">
+        <th:block th:replace="${head}" />
+    </th:block>
+    <script>
+        main.initColorScheme("[[${theme.config.style.color_scheme}]]",[[${theme.config.style.enable_change_color_scheme}]])
+    </script>
+</th:block>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(title = '链接 - ' + ${site.title}, hero = null, content = ~{::content}, head = null, footer = null, sidebar = ~{::sidebar}, contentClass = '')}"
+>
+  <th:block th:fragment="content">
+    <div class="page archive">
+      <h2 class="single-title animated fadeInDown faster" >传送门</h2>
+      <div class="rounded-xl bg-white p-4 dark:bg-slate-800">
+        <section class="container card">
+          <div id="page">
+            <th:block th:each="group : ${groups}">
+                <article>
+                    <div class="links">
+                        <h3 class="link-title">
+                            <span class="fake-title" th:text="${group.spec.displayName}"></span>
+                        </h3>
+                        <ul class="link-items fontSmooth">
+                            <li class="link-item" th:each="link : ${group.links}">
+                                <a class="link-item-inner effect-apollo" :key="i" th:href="${link.spec.url}" target="_blank">
+                                    <img class="lazyload" th:src="${link.spec.logo}" th:alt="${link.spec.displayName}" onerror="imgError(this)">
+                                    <span class="sitename" th:text="${link.spec.displayName}"></span>
+                                    <div class="linkdes" th:text="${link.spec.description}"></div>
+                                </a>
+                            </li> 
+                        </ul>
+                    </div>
+                </article>
+            </th:block>
+          </div>
+        </section>
+      </div>
+    </div>
+  </th:block>
+</html>
