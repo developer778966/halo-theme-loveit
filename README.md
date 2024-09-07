@@ -6,7 +6,7 @@
 
 1. 手动从以下地址下载主题包并在 Console 的主题管理界面安装，安装方式可参考：<https://docs.halo.run/user-guide/themes>
 
-    - https://github.com/halo-dev/theme-earth/releases
+    - https://github.com/developer778966/halo-theme-loveit/releases
 
 ## 插件支持
 
