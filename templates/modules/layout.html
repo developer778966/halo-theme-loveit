@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="html (title,hero,content,head,footer,sidebar,contentClass)">
+  <head>
+    <!--/* 引入公共 Head */-->
+    <th:block th:replace="~{modules/head/index}" />
+  </head>
+  <!--<body class="bg-slate-50 dark:bg-slate-900">-->
+  <body data-header-desktop="fixed" data-header-mobile="auto" class="bg-slate-50 dark:bg-slate-900">  
+    <div id="mask"></div>
+    <div class="wrapper">
+      <th:block th:replace="~{modules/header-desktop}" />
+      <th:block th:replace="~{modules/header}" />
+      <main class="main">
+        <div class="container">
+          <th:block th:replace="${content}" />
+        </div>
+      </main> 
+    </div>
+    <div id="fixed-buttons" class="animated faster">
+      <a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+        <i class="fas fa-chevron-up fa-fw"></i>
+      </a>
+      <a href="#comments" id="view-comments" class="fixed-button" title="查看评论" style="display: block;">
+          <i class="fas fa-comment-alt fa-fw"></i>
+      </a>
+    </div>
+
+    <th:block th:replace="~{modules/footer}" />
+    <th:block th:if="${footer != null}">
+      <th:block th:replace="${footer}" />
+    </th:block>
+<!--
+    <th:block th:if="${hero != null}">
+      <th:block th:replace="${hero}" />
+    </th:block>
+    <th:block th:unless="${hero != null}">
+      <th:block th:replace="~{modules/hero :: hero(isHome = true, cover = null, title = null)}" />
+    </th:block>
+
+    <section class="container mx-auto mt-6 grid grid-cols-4 gap-6" th:classappend="${contentClass}">
+      <div class="z-0 col-span-4 sm:col-span-3">
+        <th:block th:replace="${content}" />
+      </div>
+      <th:block th:if="${sidebar != null}">
+        <th:block th:replace="${sidebar}" />
+      </th:block>
+      <th:block th:if="${sidebar == null}">
+        <th:block th:replace="~{modules/sidebar :: sidebar(prepend = null)}" />
+      </th:block>
+    </section>
+    <th:block th:replace="~{modules/footer}" />
+    <th:block th:if="${footer != null}">
+      <th:block th:replace="${footer}" />
+    </th:block>
+  -->
+  </body>
+</html>

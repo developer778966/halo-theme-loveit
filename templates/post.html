@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(title = ${post.spec.title} + ' - ' + ${site.title}, hero = ~{::hero}, content = ~{::content}, head = ~{::head}, footer = ~{::footer}, sidebar = ~{::sidebar}, contentClass = ${theme.config.layout.content_header} and ${not #strings.isEmpty(post.spec.cover)} ? '!-mt-20' : '')}"
+>
+  <th:block th:fragment="head">
+    <link rel="stylesheet" th:href="@{/assets/styles/github-markdown.css?v={version}(version=${theme.spec.version})}" />
+  </th:block>
+  <th:block th:fragment="hero">
+    <th:block
+      th:replace="~{modules/hero :: hero(isHome = false, cover = ${post.spec.cover}, title = ${post.spec.title})}"
+    />
+  </th:block>
+  
+  <th:block th:fragment="footer">
+    <script>
+      main.generateToc();
+    </script>
+  </th:block>
+  <!--
+  <th:block th:fragment="sidebar_prepend">
+    <div
+      class="toc-container sticky top-20 z-[5] w-full cursor-pointer rounded-xl bg-white p-3 shadow transition-all duration-500 hover:shadow-md dark:bg-slate-800"
+    >
+      <h2 class="inline-flex items-center gap-2 text-base dark:text-slate-50">
+        <span class="i-tabler-list text-lg"></span>
+        目录
+      </h2>
+      <div class="toc mt-2 max-h-64 overflow-auto"></div>
+    </div>
+  </th:block>
+  
+  <th:block th:fragment="sidebar">
+    <th:block th:replace="~{modules/sidebar :: sidebar(prepend = ~{::sidebar_prepend})}"></th:block>
+  </th:block>-->
+  <th:block th:fragment="content">
+    <div class="toc" id="toc-auto" style=" max-width: 222px; visibility: visible; position: fixed; top: 76px;">
+      <h2 class="toc-title">目录</h2>
+      <div class="toc-content" id="toc-content-auto">
+          <nav id="TableOfContents">
+          </nav>
+      </div>
+    </div>
+    
+    <article class="page single" data-toc="enable">
+      
+      <div class="page-box-shadow" style="border-radius: 0.5rem;">
+        <div class="featured-image">
+          <img class="lazyautosizes lazyloaded" 
+              th:src="${post.spec.cover}" 
+              th:data-src="${post.spec.cover}" 
+              th:data-srcset="${post.spec.cover}" 
+              data-sizes="auto" 
+              th:alt="${post.spec.title}"
+                th:title="${post.status.excerpt}" 
+                sizes="1008px" 
+                th:srcset="${post.spec.cover}">
+        </div>
+        <div class="single-card" data-image="true">
+          <h2 class="single-title animated flipInX" th:text="${post.spec.title}"></h2>
+          <div class="post-meta">
+            <div class="post-meta-line">
+              <span class="post-author">
+                <a href="/about" title="Author" rel=" author" class="author">
+                  <i class="fas fa-user-circle fa-fw"></i>[[${post.owner.displayName}]]
+                </a>
+              </span>&nbsp;
+              <span class="post-category" >收纳于 
+                <th:block th:each="cts : ${post.categories}">
+                  <a th:href="@{${cts.status.permalink}}" >
+                    <i class="far fa-folder fa-fw"></i>[[${cts.spec.displayName}]]
+                  </a>
+                </th:block>
+                
+              </span>
+            </div>
+            <div class="post-meta-line" th:with="leg = ${#strings.length(#strings.trim(post.content.content))}">
+              <span>
+                <i class="far fa-calendar-alt fa-fw"></i>&nbsp; 发表于<time th:text="${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}"></time>
+              </span>&nbsp;
+              <span>
+                <i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 [[${leg}]] 字
+              </span>&nbsp;
+              <span>
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 [[${leg/400}]] 分钟
+              </span>&nbsp;
+            </div>
+          </div>
+
+          <hr style="margin:15px 0 20px 0;border:0;padding:3px;background:repeating-linear-gradient(135deg, #a2a9b6 0px, #a2a9b6 1px, transparent 1px, transparent 6px);">
+          <div class="details toc" id="toc-static" data-kept="">
+            <div class="details-summary toc-title">
+              <span>目录</span>
+              <span><i class="details-icon fas fa-angle-right"></i></span>
+            </div>
+            <div class="details-content toc-content" id="toc-content-static"></div>
+          </div>
+          <!--正文-->
+          <div id="article">
+            <div class="content" id="content" lg-uid="lg0">
+              <th:block th:utext="${post.content.content}"></th:block>
+              <!--这放了一张图
+              <figure>
+                <a class="lightgallery" 
+                    href="https://mrhelloworld.com/resources/mrhelloworld/qrcode/OfficialAccounts500-500.gif" 
+                    title="https://mrhelloworld.com/resources/mrhelloworld/qrcode/OfficialAccounts500-500.gif" 
+                    data-thumbnail="https://mrhelloworld.com/resources/mrhelloworld/qrcode/OfficialAccounts500-500.gif" 
+                    data-sub-html="<h2> </h2>">
+                  <img class="lazyload" src="/svg/loading.min.svg" 
+                    data-src="https://mrhelloworld.com/resources/mrhelloworld/qrcode/OfficialAccounts500-500.gif" 
+                    data-srcset="https://mrhelloworld.com/resources/mrhelloworld/qrcode/OfficialAccounts500-500.gif, 
+                    https://mrhelloworld.com/resources/mrhelloworld/qrcode/OfficialAccounts500-500.gif 1.5x, 
+                    https://mrhelloworld.com/resources/mrhelloworld/qrcode/OfficialAccounts500-500.gif 2x" 
+                    data-sizes="auto" 
+                    alt="https://mrhelloworld.com/resources/mrhelloworld/qrcode/OfficialAccounts500-500.gif">
+                </a>
+                <figcaption class="image-caption"> </figcaption>
+              </figure>-->
+            </div>
+          </div>
+          <!--感谢支持&赞赏-->
+          <div style="text-align:center;margin-bottom:30px;">
+            <h5 style="font-weight:500;margin-bottom:10px;">「&nbsp;感谢支持&nbsp;」</h5>
+            <button id="rewardButton"><span>赞赏</span></button>
+            <div id="QR" style="display:none;">
+              <div id="wechat" style="display:inline-block">
+                <a class="fancybox" rel="group">
+                    <img id="wechat_qr" th:src="@{/assets/images/Luffy01.jpg}" alt="WeChat Pay"></a>
+                <h5 style="font-weight:600;margin-top:5px;"><i class="fab fa-weixin"></i>&nbsp;嘿嘿~</h5>
+              </div>
+              <div id="alipay" style="display: inline-block">
+                <a class="fancybox" rel="group">
+                    <img id="alipay_qr" th:src="@{/assets/images/Luffy02.jpg}" alt="Alipay"></a>
+                <h5 style="font-weight:600;margin-top:5px;"><i class="fab fa-alipay"></i>&nbsp;哈哈~</h5>
+              </div>
+            </div>
+          </div>
+          <!--ai给的目录构建，不咋靠谱
+          <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                const toc = document.getElementById('TableOfContents');
+                toc.innerHTML = '<ul></ul>'; // 初始化TOC容器，添加一个<ul>
+                
+                const buildToc = (headings, ulLevel = 1) => {
+                    const ul = document.createElement('ul'); // 创建一个新的<ul>用于当前层级
+                    
+                    headings.forEach(heading => {
+                        const li = document.createElement('li'); // 创建<li>
+                        const link = document.createElement('a'); // 创建<a>用于链接
+                        
+                        link.textContent = heading.textContent; // 设置链接文字
+                        link.href = '#' + heading.id; // 假设每个标题都有唯一的id，用于锚点跳转
+                        
+          
+                        li.appendChild(link); // 将<a>添加到<li>
+          
+                        ul.appendChild(li); // 将<li>添加到当前层级的<ul>
+          
+                        // 递归处理下一级标题
+                        if (heading.tagName.charCodeAt(1) < ulLevel + 1) {
+                            buildToc(Array.from(heading.nextElementSibling.querySelectorAll(`h${parseInt(heading.tagName.charAt(1)) + 1}`)), ulLevel + 1).forEach(subUl => ul.appendChild(subUl)); 
+                        }
+                    });
+          
+                    return ul.childNodes; // 返回创建的<ul>内的所有子节点，以便在递归调用中使用
+                };
+          
+                // 初始化目录生成，并直接构建在初始的<ul>内
+                buildToc(Array.from(document.querySelectorAll('h1, h2, h3, h4'))).forEach(node => toc.querySelector('ul').appendChild(node));
+            });
+            
+          </script>-->
+          <!--包裹代码块，调整DOM结构，便于设置展示样式&交互功能-->
+          <script>
+            document.querySelectorAll('pre code').forEach((codeElement) => {
+              let preElement = codeElement.parentNode;
+              if (!preElement.classList.contains('chroma')) {
+                  preElement.classList.add('chroma');
+              }
+              let highlightDiv = preElement.parentNode;
+              if (!highlightDiv || !highlightDiv.classList.contains('highlight')) {
+                  highlightDiv = document.createElement('div');
+                  highlightDiv.className = 'highlight';
+                  preElement.parentNode.insertBefore(highlightDiv, preElement);
+                  highlightDiv.appendChild(preElement);
+              }
+          });
+          </script>
+          <!--赞赏按钮-->
+          <script type="text/javascript">
+            if ($('#rewardButton')[0]) {
+                $("#rewardButton").on("click", function() {
+                    var qr = document.getElementById('QR');
+                    if (qr.style.display === 'none') {
+                        $("#QR").slideDown();
+                    } else {
+                        $("#QR").slideUp();
+                    }
+                });
+            }
+          </script>
+            <!--<script src="https://readmore.openwrite.cn/js/readmore.js" type="text/javascript"></script>-->
+            <!--BTWPlugin
+            <style type="text/css">
+                #btw-modal-header {
+                    color: #161209 !important;
+                    font-size: 15px !important;
+                }
+
+                #btw-modal-header strong {
+                    color: rgb(240, 65, 52);
+                }
+
+                #btw-footer {
+                    margin: 0px 0px 20px !important;
+                    color: white !important;
+                }
+
+                #btw-footer a {
+                    color: white !important;
+                    pointer-events: none;
+                }
+            </style>
+            <script type="text/javascript">
+                const btw = new BTWPlugin();
+                btw.init({
+                    id: 'article',
+                    blogId: '17565-1586401950141-728',
+                    name: '哈喽沃德先生',
+                    qrcode: 'https://mrhelloworld.com/resources/mrhelloworld/qrcode/2.jpg',
+                    keyword: 'vip',
+                });
+            </script>
+            -->
+
+            <style type="text/css">
+                .post-copyright {
+                    border-top: 1px solid #e8e8e8;
+                    border-bottom: 1px solid #e8e8e8;
+                    padding: 0.5em 1em;
+                    border-left: 2px solid #ff1700;
+                    background-color: #f9f9f9;
+                    line-height: 1.6;
+                }
+
+                .post-copyright strong {
+                    font-weight: 600;
+                }
+
+                .post-copyright li {
+                    list-style: none;
+                }
+
+                .post-copyright a {
+                    color: #2d96bd;
+                }
+
+                .post-copyright a:hover {
+                    color: #ef3982;
+                }
+            </style>
+            <!--post-copyright-->
+            <ul class="post-copyright">
+                <li class="post-copyright-author">
+                    <strong>文章作者：</strong>[[${post.owner.displayName}]]
+                </li>
+                <li class="post-copyright-link">
+                    <strong>文章链接：</strong><a th:href="${post.status.permalink}" 
+                    target="_blank" 
+                    th:text="${post.status.permalink}">https://mrhelloworld.com/rabbitmq-delay-message/</a>
+                </li>
+                <li class="post-copyright-license">
+                    <strong>版权声明：</strong>本站所有文章除特别声明外，均采用 
+                    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+                    target="_blank" title="CC BY-NC-ND 4.0">CC BY-NC-ND 4.0</a>
+                      转载请注明来自 <a href="/" target="_blank" th:title="${site.title}">[[${post.owner.displayName}]]</a>
+                </li>
+            </ul>
+            <!--post-footer-->
+            <div class="post-footer" id="post-footer">
+              <div class="post-info">
+                  <div class="post-info-tag">
+                    <span th:each="tag : ${post.tags}">
+                      <a th:href="@{${tag.status.permalink}}" th:text="${tag.spec.displayName}" th:attr="title=${tag.spec.displayName}">Spring Boot</a>
+                    </span>
+                  </div>
+                  <div class="post-info-line" style="padding: 0.3rem 0 1rem;display: flex;justify-content: space-between;">
+                      <div class="post-info-mod">
+                          <span>更新于 [[${#dates.format(post.status.lastModifyTime,theme.config.post.post_time_display_type ?: 'yyyy-MM-dd')}]]</span>
+                      </div>
+                      <div class="post-info-mod">
+                          <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+                      </div>
+
+                  </div>
+                  
+              </div>
+              <!--上一页/下一页-->
+              <div class="post-nav" th:with="postCursor = ${postFinder.cursor(post.metadata.name)}">
+                <a th:if="${postCursor.hasPrevious()}"
+                    th:href="@{${postCursor.previous.status.permalink}}"
+                    th:title="${postCursor.previous.spec.title}" class="prev" rel="prev">
+                  <i class="fas fa-angle-left fa-fw"></i><span th:text="${#strings.abbreviate(postCursor.previous.spec.title,20)}"></span>
+                </a>
+                  <a th:if="${postCursor.hasNext()}"
+                      th:href="@{${postCursor.next.status.permalink}}"
+                      th:title="${postCursor.next.spec.title}" class="next" rel="next">
+                    <span th:text="${#strings.abbreviate(postCursor.next.spec.title,20)}"></span><i class="fas fa-angle-right fa-fw"></i>
+                  </a>
+              </div>
+            </div>
+        </div>
+      </div>
+  </article>
+  </th:block>
+</html>

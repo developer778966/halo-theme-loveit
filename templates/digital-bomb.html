@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(title = ${singlePage.spec.title} + ' - ' + ${site.title}, hero = ~{::hero}, content = ~{::content}, head = ~{::head}, footer = ~{::footer}, sidebar = null, contentClass = ${theme.config.layout.content_header} and ${not #strings.isEmpty(singlePage.spec.cover)} ? '!-mt-20' : '')}"
+>
+    <th:block th:fragment="head">
+        <link rel="stylesheet" th:href="@{/assets/styles/github-markdown.css?v={version}(version=${theme.spec.version})}" />
+    </th:block>
+    <th:block th:fragment="hero">
+        <th:block
+        th:replace="~{modules/hero :: hero(isHome = false, cover = ${singlePage.spec.cover}, title = ${singlePage.spec.title})}"
+        />
+    </th:block>
+    <th:block th:fragment="content">
+        <div class="page archive">
+            <div class="aa">
+                <style>
+                    .aa {margin: 50px auto;
+                        max-width: 600px;
+                        text-align: center;
+                        background-color: #d1d1d1;
+                        padding: 30px;
+                        border-radius: 10px;
+                    }
+                    .re-hidden {display: none;}
+                    #guessInput {width: 50px;}
+                    #message {margin-top: 20px; font-size: 1.2em;}
+                    #resetButton{
+                        font-size: 18px;
+                        padding: 5px 10px;
+                        background-color: #939597;
+                        color: #fff;
+                        border: none;
+                        cursor: pointer;
+                    }
+                </style>
+                <h1>数字炸弹游戏</h1>
+                <p>我想了一个1到100之间的数字，你能猜到是多少吗？</p>
+            
+                <label for="guessInput">请输入你的猜测：</label>
+                <input type="number" id="guessInput">
+                <button onclick="checkGuess()" style="font-size: 18px;
+                        padding: 5px 10px;
+                        background-color: #939597;
+                        color: #fff;
+                        border: none;
+                        cursor: pointer;">猜测</button>
+            
+                <p id="message"></p>
+                <button id="resetButton" class="re-hidden" onclick="resetGame()">再来一次</button>
+
+                <script>
+                    let secretNumber = Math.floor(Math.random() * 100) + 1;
+                    let minGuess = 1; // 猜测的最小值
+                    let maxGuess = 100; // 猜测的最大值
+                    let attempts = 0;
+
+                    // 初始化游戏
+                    resetGame();
+            
+                    function checkGuess() {
+                        attempts++;
+                        const guess = document.getElementById('guessInput').value;
+                        
+                        if (guess === '') {
+                            setMessage("请输入一个数字！");
+                            return;
+                        }
+                        
+                        if (isNaN(guess)) {
+                            setMessage("那不是一个有效的数字！");
+                            return;
+                        }
+            
+                        if (isNaN(guess) || guess <0 || guess > 100) {
+                            setMessage("请输入1-100之间的数字。");
+                            return;
+                        }
+                        
+                        if (guess < secretNumber) {
+                            minGuess =  Math.max(minGuess, guess); // 更新最小猜测值
+                            setMessage("给你个提示 : 正确数字在 " + minGuess + "~" + maxGuess + " 中！");
+                        } else if (guess > secretNumber) {
+                            maxGuess = Math.min(maxGuess, guess); // 更新最大猜测值
+                            setMessage("给你个提示 : 正确数字在 " + minGuess + "~" + maxGuess + " 中！");
+                        } else {
+                            setMessage(`恭喜你！你在第${attempts}次尝试中猜对了数字${secretNumber}！`);
+                            document.getElementById('guessInput').disabled = true;
+                            // 显示再来一次按钮
+                            document.getElementById('resetButton').classList.remove('hidden');
+                        }
+                    }
+            
+                    function setMessage(msg) {
+                        document.getElementById('message').textContent = msg;
+                    }
+
+                    function resetGame() {
+                        secretNumber = Math.floor(Math.random() * 100) + 1;
+                        minGuess = 1;
+                        maxGuess = 100;
+                        attempts = 0;
+                        setMessage(""); // 清空消息
+                        document.getElementById('guessInput').value = ""; // 清空输入框
+                        document.getElementById('guessInput').disabled = false; // 重新启用输入框
+                        // 重置时隐藏再来一次按钮
+                        document.getElementById('resetButton').classList.add('hidden');
+                    }
+                </script>
+            </div>
+        </div>
+        
+    </th:block>
+</html>
